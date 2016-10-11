@@ -22,12 +22,15 @@ public:
 	**********************************/
 
 	int *fibIndex;
-
-	int moveOne( int board[4][4], MoveDirection iDirection );
+	int board_prev[4][4];
+	int prev_move;
+	
+	int moveOne( int board[4][4], MoveDirection iDirection, int& score );
 	void printBoard( int board[4][4] );
 	bool cmpBoard( int board[4][4], int temp[4][4] );
 	void copyBoard( int board[4][4], int temp[4][4] );
 	int getEmpty( int board[4][4] );
+	int getMaxTile( int board[4][4] );
 };
 
 #endif

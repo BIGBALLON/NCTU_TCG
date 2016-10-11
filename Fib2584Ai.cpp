@@ -11,7 +11,6 @@ Fib2584Ai::Fib2584Ai()
 
 void Fib2584Ai::initialize(int argc, char* argv[])
 {
-	srand(time(NULL));
 	fibIndex = new int[2178310];
 	fibIndex[0] = 0x3fffffff;
     fibIndex[1] = 1;
@@ -50,54 +49,94 @@ void Fib2584Ai::initialize(int argc, char* argv[])
 
 
 
-MoveDirection Fib2584Ai::generateMove(int board[4][4])
+int Fib2584Ai::getMaxTile( int board[4][4] )
 {
-
-	MoveDirection select = static_cast<MoveDirection>(rand() % 4);
-
-	int emptyCnt = getEmpty(board);
-
-    int temp[4][4] = {0};	
-	copyBoard(board,temp);
-	int moveUp = moveOne(temp,MOVE_UP);
-
-	copyBoard(board,temp);
-	int moveDown = moveOne(temp,MOVE_DOWN);
-
-	copyBoard(board,temp);
-	int moveLeft = moveOne(temp,MOVE_LEFT);
-
-	copyBoard(board,temp);
-	int moveRight = moveOne(temp,MOVE_RIGHT);
-
-
-	if (emptyCnt < moveUp ){
-		emptyCnt = moveUp;
-		select = MOVE_UP;
-	}
-
-	if (emptyCnt < moveDown ){
-		emptyCnt = moveDown;
-		select = MOVE_DOWN;
-	}
-
-	if (emptyCnt < moveLeft ){
-		emptyCnt = moveLeft;
-		select = MOVE_LEFT;
-	}
-
-	if (emptyCnt < moveRight ){
-		emptyCnt = moveRight;
-		select = MOVE_RIGHT;
-	}
-
-	return select;
+    int maxTile = 0;
+    for( int i = 0; i < 4; ++i ){
+        for( int j = 0;j < 4; ++j ){
+            if( maxTile < board[i][j] ){
+                maxTile = board[i][j];
+            }
+        }
+    }
+    return maxTile;
 }
 
-int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection )
+MoveDirection Fib2584Ai::generateMove(int board[4][4])
+{
+ 
+    int emptyCnt = getEmpty(board);
+
+    int temp[4][4] = {0};   
+
+    int scoreUp = 0;
+    int scoreDown = 0;
+    int scoreLeft = 0;
+    int scoreRight = 0;
+
+    int maxTileUp = 0;
+    int maxTileDown = 0;
+    int maxTileLeft = 0;
+    int maxTileRight = 0;
+
+    bool boardHasChanged = cmpBoard(board_prev, board);
+    MoveDirection optimal_move;
+
+
+    // Find optimal move
+    if (!boardHasChanged) {
+        optimal_move = static_cast<MoveDirection>((prev_move + 1) % 4);
+    }else{
+        copyBoard(board,temp);
+        int moveUp = moveOne(temp,MOVE_UP,scoreUp);
+        maxTileUp = getMaxTile(temp);
+        copyBoard(board,temp);
+        int moveDown = moveOne(temp,MOVE_DOWN,scoreDown);
+        maxTileDown = getMaxTile(temp);
+
+        copyBoard(board,temp);
+        int moveLeft = moveOne(temp,MOVE_LEFT,scoreLeft);
+        maxTileLeft = getMaxTile(temp);
+
+        copyBoard(board,temp);
+        int moveRight = moveOne(temp,MOVE_RIGHT,scoreRight);
+        maxTileRight = getMaxTile(temp);
+
+        if (moveUp && moveLeft){
+             optimal_move = scoreUp > scoreLeft ? MOVE_UP : MOVE_LEFT;    
+        }else if(moveLeft){
+            optimal_move = MOVE_LEFT;    
+        }else if (moveUp){
+            optimal_move = MOVE_UP;
+        }else if(moveRight){
+            optimal_move = MOVE_RIGHT;
+        }else{
+            optimal_move = MOVE_DOWN;
+        }
+
+    }
+
+    copyBoard(board,board_prev);
+    prev_move = optimal_move;
+    return optimal_move;
+}
+
+
+void Fib2584Ai::gameOver(int board[4][4], int iScore)
+{
+	return;
+}
+
+/**********************************
+You can implement any additional functions
+you may need.
+**********************************/
+
+int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection, int& score )
 {
     int temp[4][4] = {0};
-	copyBoard(board,temp);
+    score = 0;
+    copyBoard(board,temp);
     switch (iDirection){
     case MOVE_UP:
         for(int row = 1; row < ROW; ++row)  {
@@ -111,6 +150,7 @@ int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection )
                             || ( board[crow-1][col] == 1 && board[crow][col] == 1 )){
                             board[crow - 1][col] += board[crow][col];
                             board[crow][col] = 0;
+                            score += board[crow - 1][col];
                         }
                     }
                 }
@@ -129,6 +169,7 @@ int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection )
                             || ( board[crow+1][col] == 1 && board[crow][col] == 1 )){
                             board[crow + 1][col] += board[crow][col];
                             board[crow][col] = 0;
+                            score += board[crow + 1][col];
                         }
                     }
                 }
@@ -147,6 +188,7 @@ int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection )
                             || ( board[row][ccol - 1] == 1 && board[row][ccol] == 1 ) ){
                             board[row][ccol - 1] += board[row][ccol];
                             board[row][ccol] = 0;
+                            score += board[row][ccol - 1];
                         }
                     }
                 }
@@ -165,6 +207,7 @@ int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection )
                             || ( board[row][ccol + 1] == 1 && board[row][ccol] == 1 ) ){
                             board[row][ccol + 1] += board[row][ccol];
                             board[row][ccol] = 0;
+                            score += board[row][ccol + 1];
                         }
                     }
                 }
@@ -176,21 +219,11 @@ int Fib2584Ai::moveOne( int board[4][4], MoveDirection iDirection )
     int isChanged = cmpBoard(board,temp);
 
     if (isChanged)
-    	return getEmpty(board);
+        return getEmpty(board);
     return -1;
 
 }
 
-
-void Fib2584Ai::gameOver(int board[4][4], int iScore)
-{
-	return;
-}
-
-/**********************************
-You can implement any additional functions
-you may need.
-**********************************/
 
 void Fib2584Ai::printBoard( int board[4][4] )
 {
