@@ -1,10 +1,7 @@
-#include "Fib2584Ai.h"
-#include <fstream>
-#include <iostream>
-#include <climits>
+#include "Fib2584Ai_TD.h"
 using namespace std;
 
-Fib2584Ai::TDLearning::TDLearning(bool trainMode, const std::string &filename)
+TDLearning::TDLearning(bool trainMode, const std::string &filename)
 :	filename(filename), 
 	trainMode(trainMode)
 {
@@ -19,7 +16,7 @@ Fib2584Ai::TDLearning::TDLearning(bool trainMode, const std::string &filename)
 	}
 }
 
-Fib2584Ai::TDLearning::~TDLearning()
+TDLearning::~TDLearning()
 {
 	const int featureNum = 32 * 32 * 32 * 32;
 
@@ -33,7 +30,7 @@ Fib2584Ai::TDLearning::~TDLearning()
 	delete [] tableInner;
 }
 
-MoveDirection Fib2584Ai::TDLearning::Move(const int board[4][4])
+MoveDirection TDLearning::Move(const int board[4][4])
 {
 	GameBoardAI initBoard(board);
 	MoveDirection bestDir;
@@ -43,11 +40,11 @@ MoveDirection Fib2584Ai::TDLearning::Move(const int board[4][4])
 	// Find the best direction to move
 	for (int dir = 0; dir < 4; dir++) {
 		GameBoardAI newBoard(initBoard);
-		int reward = newBoard.move((MoveDirection)dir) * SCALE;
+		int reward = newBoard.move((MoveDirection)dir);
 		if (newBoard == initBoard)
 			continue;
 		FeatureTable newFeature(newBoard, reward);
-		int valuePlusReward = getFeatureTableValue(newFeature) + reward;
+		int valuePlusReward = getTableValue(newFeature) + reward;
 		if (valuePlusReward > bestValuePlusReward) {
 			bestDir = (MoveDirection)dir;
 			bestValuePlusReward = valuePlusReward;
@@ -62,7 +59,7 @@ MoveDirection Fib2584Ai::TDLearning::Move(const int board[4][4])
 	return bestDir;
 }
 
-void Fib2584Ai::TDLearning::gameover(const int board[4][4])
+void TDLearning::gameover(const int board[4][4])
 {
 	const int alpha = 1;
 
@@ -70,7 +67,7 @@ void Fib2584Ai::TDLearning::gameover(const int board[4][4])
 		FeatureTable nextFeature;
 		GameBoardAI endBoard(board);
 		FeatureTable feature(endBoard, 0);
-		int delta = -getFeatureTableValue(feature);
+		int delta = -getTableValue(feature);
 		
 		for (int i = 0; i < 4; i++) {
 			tableOuter[feature.outer[i]] += alpha * delta / SCALE;
@@ -94,8 +91,8 @@ void Fib2584Ai::TDLearning::gameover(const int board[4][4])
 			FeatureTable feature = record.top();
 			record.pop();
 
-			int delta = getFeatureTableValue(nextFeature) + nextFeature.reward -
-				getFeatureTableValue(feature);
+			int delta = getTableValue(nextFeature) + nextFeature.reward -
+				getTableValue(feature);
 
 			for (int i = 0; i < 4; i++) {
 				tableOuter[feature.outer[i]] += alpha * delta / SCALE;
@@ -118,7 +115,7 @@ void Fib2584Ai::TDLearning::gameover(const int board[4][4])
 	}
 }
 
-Fib2584Ai::TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
+TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
 :	reward(reward)
 {
 	outer[0] = (unsigned int)board.getRow(0);
@@ -131,7 +128,7 @@ Fib2584Ai::TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward
 	outer[3] = (unsigned int)board.getColumn(3);
 }
 
-Fib2584Ai::TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
+TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 :	reward(src.reward)
 {
 	for (int i = 0; i < 4; i++) {
@@ -140,7 +137,7 @@ Fib2584Ai::TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 	}
 }
 
-int Fib2584Ai::TDLearning::getFeatureTableValue(const FeatureTable &feature) 
+int TDLearning::getTableValue(const FeatureTable &feature) 
 	const
 {
 	int value = 0;
@@ -155,7 +152,7 @@ int Fib2584Ai::TDLearning::getFeatureTableValue(const FeatureTable &feature)
 	return value;
 }
 
-unsigned int Fib2584Ai::TDLearning::reverseFeature(unsigned int a) const
+unsigned int TDLearning::reverseFeature(unsigned int a) const
 {
 	unsigned int result = 0;
 
