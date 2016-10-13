@@ -3,7 +3,11 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <string>
+#include <stack>
 #include "Fib2584/MoveDirection.h"
+#include "GameBoardAI.h"
+using namespace std;
 
 class Fib2584Ai
 {
@@ -21,16 +25,38 @@ public:
 	or define any variables you may need.
 	**********************************/
 
-	int *fibIndex;
-	int board_prev[4][4];
-	int prev_move;
-	
-	int moveOne( int board[4][4], MoveDirection iDirection, int& score );
-	void printBoard( int board[4][4] );
-	bool cmpBoard( int board[4][4], int temp[4][4] );
-	void copyBoard( int board[4][4], int temp[4][4] );
-	int getEmpty( int board[4][4] );
-	int getMaxTile( int board[4][4] );
+	class TDLearning
+	{
+	public:
+		TDLearning(bool trainMode = true, 
+			const string &filename = string("table"));
+		~TDLearning();
+		MoveDirection Move(const int board[4][4]);
+		void gameover(const int board[4][4]);
+	private:
+		struct FeatureTable {
+			FeatureTable() {}
+			FeatureTable(GameBoardAI &board, int reward);
+			FeatureTable(const FeatureTable &src);
+
+			unsigned int outer[4];
+			unsigned int inner[4];
+			int reward;	
+		};
+
+		const int SCALE = 100;	//  0.01
+
+		string filename;
+		bool trainMode;
+		int *tableOuter;
+		int *tableInner;
+		stack<FeatureTable> record;
+
+		int getFeatureTableValue(const FeatureTable &feature) const;
+		unsigned int reverseFeature(unsigned int a) const;
+	};
+
+	TDLearning td;
 };
 
 #endif
