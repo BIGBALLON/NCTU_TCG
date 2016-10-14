@@ -25,7 +25,7 @@ private:
 		FeatureTable(GameBoardAI &board, int reward);
 		FeatureTable(const FeatureTable &src);
 
-		unsigned int outer[4];
+		unsigned int ax[4];
 		unsigned int inner[4];
 		int reward;	
 	};
@@ -35,7 +35,7 @@ private:
 	string filename;
 	stack<FeatureTable> record;
 	bool trainMode;
-	int *tableOuter;
+	int *tableAx;
 	int *tableInner;
 
 	int getTableValue(const FeatureTable &feature) const;

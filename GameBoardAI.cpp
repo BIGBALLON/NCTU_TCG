@@ -1,5 +1,5 @@
 #include "GameBoardAI.h"
-
+#include <stdio.h>
 const int GameBoardAI::fibonacci_[32] = {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309};
 Random GameBoardAI::random_;
 
@@ -146,10 +146,50 @@ BitBoard GameBoardAI::getColumn( int column )
        	   (tempBoard & BitBoard(0x0000, 0x000000000000001f));
 }
 
+BitBoard GameBoardAI::getAx( int num )
+{
+	if ( num == 0 ){
+		BitBoard tempBoard = ( board_ >> 75 & 0x1f ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 70 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 65 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 60 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 55 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 50 & 0x1f ) );
+		return tempBoard;
+	}else if ( num == 1 ){
+		BitBoard tempBoard = ( board_ >> 60 & 0x1f ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 40 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 20 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 65 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 45 & 0x1f ) );
+		return tempBoard;
+	}else if( num == 2 ){
+		BitBoard tempBoard = ( board_ & 0x1f ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 5 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 10 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 15 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 20 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 25 & 0x1f ) );
+		return tempBoard;
+	}else if( num == 3 ){
+		BitBoard tempBoard = ( board_ >> 15 & 0x1f ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 35 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 55 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 75 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 10 & 0x1f ) ) << 5;
+		tempBoard = ( tempBoard | ( board_ >> 30 & 0x1f ) );
+		return tempBoard;
+	}
+	
+}
+
 BitBoard GameBoardAI::restoreRow( BitBoard rowBits, int row )
 {
   	return rowBits << (row * 20);
 }
+
+
 
 BitBoard GameBoardAI::restoreColumn( BitBoard columnBits, int column )
 {

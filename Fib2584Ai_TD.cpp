@@ -6,12 +6,13 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 	trainMode(trainMode)
 {
 	const int featureNum = 32 * 32 * 32 * 32;
+	const long long featureNumAx = 26 * 26 * 26 * 26 * 26 * 26;
 	ifstream fin(filename, ifstream::in | ifstream::binary);
 
-	tableOuter = new int[featureNum]; 
+	tableAx = new int[featureNumAx]; 
 	tableInner = new int[featureNum]; 
 	if (!fin.fail()) {
-		fin.read((char *)tableOuter, featureNum * sizeof(int));
+		fin.read((char *)tableAx, featureNumAx * sizeof(int));
 		fin.read((char *)tableInner, featureNum * sizeof(int));
 	}
 }
@@ -19,14 +20,14 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 TDLearning::~TDLearning()
 {
 	const int featureNum = 32 * 32 * 32 * 32;
-
+	const long long featureNumAx = 26 * 26 * 26 * 26 * 26 * 26;
 	if (trainMode) {
 		ofstream fout(filename, ifstream::out | ifstream::binary | ifstream::trunc);
 
-		fout.write((char *)tableOuter, featureNum * sizeof(int));
+		fout.write((char *)tableAx, featureNumAx * sizeof(int));
 		fout.write((char *)tableInner, featureNum * sizeof(int));
 	}
-	delete [] tableOuter;
+	delete [] tableAx;
 	delete [] tableInner;
 }
 
@@ -70,12 +71,7 @@ void TDLearning::gameover(const int board[4][4])
 		int delta = -getTableValue(feature);
 		
 		for (int i = 0; i < 4; i++) {
-			tableOuter[feature.outer[i]] += alpha * delta / SCALE;
-			
-			unsigned int rev = reverseFeature(feature.outer[i]);
-			if (rev != feature.outer[i]) {
-				tableOuter[rev] += alpha * delta / SCALE;
-			}
+			tableAx[feature.ax[i]] += alpha * delta / SCALE;
 		}
 		for (int i = 0; i < 4; i++) {
 			tableInner[feature.inner[i]] += alpha * delta / SCALE;
@@ -95,12 +91,7 @@ void TDLearning::gameover(const int board[4][4])
 				getTableValue(feature);
 
 			for (int i = 0; i < 4; i++) {
-				tableOuter[feature.outer[i]] += alpha * delta / SCALE;
-				
-				unsigned int rev = reverseFeature(feature.outer[i]);
-				if (rev != feature.outer[i]) {
-					tableOuter[rev] += alpha * delta / SCALE;
-				}
+				tableAx[feature.ax[i]] += alpha * delta / SCALE;
 			}
 			for (int i = 0; i < 4; i++) {
 				tableInner[feature.inner[i]] += alpha * delta / SCALE;
@@ -118,21 +109,21 @@ void TDLearning::gameover(const int board[4][4])
 TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
 :	reward(reward)
 {
-	outer[0] = (unsigned int)board.getRow(0);
 	inner[0] = (unsigned int)board.getRow(1);
 	inner[1] = (unsigned int)board.getRow(2);
-	outer[1] = (unsigned int)board.getRow(3);
-	outer[2] = (unsigned int)board.getColumn(0);
 	inner[2] = (unsigned int)board.getColumn(1);
 	inner[3] = (unsigned int)board.getColumn(2);
-	outer[3] = (unsigned int)board.getColumn(3);
+	ax[0] = (unsigned int)board.getAx(0);
+	ax[1] = (unsigned int)board.getAx(1);
+	ax[2] = (unsigned int)board.getAx(2);
+	ax[3] = (unsigned int)board.getAx(3);
 }
 
 TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 :	reward(src.reward)
 {
 	for (int i = 0; i < 4; i++) {
-		outer[i] = src.outer[i];
+		ax[i] = src.ax[i];
 		inner[i] = src.inner[i];
 	}
 }
@@ -143,7 +134,7 @@ int TDLearning::getTableValue(const FeatureTable &feature)
 	int value = 0;
 
 	for (int i = 0; i < 4; i++) {
-		value += tableOuter[feature.outer[i]];
+		value += tableAx[feature.ax[i]];
 	}
 	for (int i = 0; i < 4; i++) {
 		value += tableInner[feature.inner[i]];
