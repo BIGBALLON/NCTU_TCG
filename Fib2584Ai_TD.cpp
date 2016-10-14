@@ -10,9 +10,12 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 
 	tableOuter = new int[featureNum]; 
 	tableInner = new int[featureNum]; 
+	tableEmpty = new int[17]; 
+
 	if (!fin.fail()) {
 		fin.read((char *)tableOuter, featureNum * sizeof(int));
 		fin.read((char *)tableInner, featureNum * sizeof(int));
+		fin.read((char *)tableEmpty, 17 * sizeof(int));
 	}
 }
 
@@ -25,6 +28,7 @@ TDLearning::~TDLearning()
 
 		fout.write((char *)tableOuter, featureNum * sizeof(int));
 		fout.write((char *)tableInner, featureNum * sizeof(int));
+		fout.write((char *)tableEmpty, 7 * sizeof(int));
 	}
 	delete [] tableOuter;
 	delete [] tableInner;
@@ -85,6 +89,9 @@ void TDLearning::gameover(const int board[4][4])
 				tableInner[rev] += alpha * delta / SCALE;
 			}
 		}
+
+		//tableEmpty[feature.emptyNum] += alpha * delta / SCALE;
+
 		nextFeature = feature;	
 
 		while (!record.empty()) {
@@ -110,6 +117,9 @@ void TDLearning::gameover(const int board[4][4])
 					tableInner[rev] += alpha * delta / SCALE;
 				}
 			}
+
+			//tableEmpty[feature.emptyNum] += alpha * delta / SCALE;
+
 			nextFeature = feature;
 		}
 	}
@@ -126,6 +136,7 @@ TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
 	inner[2] = (unsigned int)board.getColumn(1);
 	inner[3] = (unsigned int)board.getColumn(2);
 	outer[3] = (unsigned int)board.getColumn(3);
+	emptyNum = board.countEmptyTile();
 }
 
 TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
@@ -135,6 +146,7 @@ TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 		outer[i] = src.outer[i];
 		inner[i] = src.inner[i];
 	}
+	emptyNum = src.emptyNum;
 }
 
 int TDLearning::getTableValue(const FeatureTable &feature) 
@@ -149,6 +161,7 @@ int TDLearning::getTableValue(const FeatureTable &feature)
 		value += tableInner[feature.inner[i]];
 	}
 
+	value += feature.emptyNum;
 	return value;
 }
 

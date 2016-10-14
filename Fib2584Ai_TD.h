@@ -27,6 +27,7 @@ private:
 
 		unsigned int outer[4];
 		unsigned int inner[4];
+		int emptyNum;
 		int reward;	
 	};
 
@@ -37,6 +38,7 @@ private:
 	bool trainMode;
 	int *tableOuter;
 	int *tableInner;
+	int *tableEmpty;
 
 	int getTableValue(const FeatureTable &feature) const;
 	unsigned int reverseFeature(unsigned int a) const;
