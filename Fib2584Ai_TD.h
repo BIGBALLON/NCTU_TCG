@@ -10,13 +10,15 @@
 #include <stack>
 #include <fstream>
 #include <iostream>
-#include <climits>
+
+#define NEGATIVE_INF -999999
 
 class TDLearning
 {
 public:
 	TDLearning(bool trainMode = true, const string &filename = string("table"));
 	~TDLearning();
+	void saveData();
 	MoveDirection Move(const int board[4][4]);
 	void gameover(const int board[4][4]);
 private:
@@ -24,22 +26,21 @@ private:
 		FeatureTable() {}
 		FeatureTable(GameBoardAI &board, int reward);
 		FeatureTable(const FeatureTable &src);
-
-		unsigned int ax[4];
-		unsigned int inner[4];
+		unsigned int reverseFeature(unsigned int a);
+		unsigned int ax[8];
+		unsigned int inner[8];
 		int reward;	
 	};
 
-	const int SCALE = 100;	//  0.01
+	const float SCALE = 100.0;	
 
 	string filename;
 	stack<FeatureTable> record;
 	bool trainMode;
-	int *tableAx;
-	int *tableInner;
+	float *tableAx;
+	float *tableInner;
 
-	int getTableValue(const FeatureTable &feature) const;
-	unsigned int reverseFeature(unsigned int a) const;
+	float getTableValue(const FeatureTable &feature);
 };
 
 #endif

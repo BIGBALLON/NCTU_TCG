@@ -20,7 +20,7 @@ public:
 
 	GameBoardAI(const GameBoardAI &src); // add
 	GameBoardAI(const int board[4][4]); // add
-	BitBoard getAx(int num);	//add
+	unsigned int getAx(int num);	//add
 
 	void initialize();
 	int move(MoveDirection moveDirection);

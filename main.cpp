@@ -22,6 +22,9 @@ int main(int argc, char* argv[])
 	Statistic statistic;
 	statistic.setStartTime();
 	// play each round
+
+	int maxScore = 0;
+	int maxTile = 0;
 	for(int i = 0;i < iPlayRounds;i++) {
 		GameBoard gameBoard;
 		gameBoard.initialize();
@@ -43,9 +46,31 @@ int main(int argc, char* argv[])
 		ai.gameOver(arrayBoard, iScore);
 		statistic.increaseOneGame();
 
-		// update statistic data
 		statistic.updateScore(iScore);
+
+		if ( maxScore < iScore ){
+			maxScore = iScore;
+			cout << "games:" << i << "    ";
+			cout << "maxScore = " << maxScore << "    ";
+			if ( maxTile < gameBoard.getMaxTile() ){
+				maxTile = gameBoard.getMaxTile();
+				cout << "maxTile = " << maxTile;
+			}
+			cout << endl;
+		}
+
+
 		statistic.updateMaxTile(gameBoard.getMaxTile());
+
+		if ( i % 10000 == 0 && i != 0 ){
+			statistic.setFinishTime();
+			statistic.show();
+			statistic.reset();
+			statistic.setStartTime();
+		}
+		if( i % 50000 == 0 && i != 0 ){
+			ai.td.saveData();
+		}
 	}
 	statistic.setFinishTime();
 
