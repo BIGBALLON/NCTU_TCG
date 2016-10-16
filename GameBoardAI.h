@@ -17,8 +17,11 @@ private:
 	static Random random_;
 public:
 	GameBoardAI();
-	GameBoardAI(const GameBoardAI &src); // Added
-	GameBoardAI(const int board[4][4]); // Added
+
+	GameBoardAI(const GameBoardAI &src); // add
+	GameBoardAI(const int board[4][4]); // add
+	unsigned int getAx(int num);	//add
+
 	void initialize();
 	int move(MoveDirection moveDirection);
 	void addRandomTile();

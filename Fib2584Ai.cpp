@@ -7,7 +7,6 @@ Fib2584Ai::Fib2584Ai()
 
 void Fib2584Ai::initialize(int argc, char* argv[])
 {
-    srand(time(NULL));
 	return;
 }
 
