@@ -35,6 +35,7 @@ TDLearning::~TDLearning()
 
 void TDLearning::saveData()
 {
+	cout << "--------------------------------------------------------------------" << endl;
 	const int featureNum = 32 * 32 * 32 * 32;
 	const long long featureNumAx = 23 * 23 * 23 * 23 * 23 * 23;
 	if (trainMode) {
@@ -44,6 +45,9 @@ void TDLearning::saveData()
 		fout.write((char *)tableInner, featureNum * sizeof(float));
 		fout.close();
 	}
+
+	cout << "-                       Table File Saved                           -" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
 }
 
 
@@ -108,8 +112,6 @@ void TDLearning::gameover(const int board[4][4])
 				tableInner[feature.inner[i]] += alpha * delta / SCALE;
 			}
 
-			//tableEmpty[feature.emptyNum] += alpha * delta / SCALE;
-
 			nextFeature = feature;
 		}
 	}
@@ -145,7 +147,6 @@ TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 		ax[i] = src.ax[i];
 		inner[i] = src.inner[i];
 	}
-	emptyNum = src.emptyNum;
 }
 
 float TDLearning::getTableValue(const FeatureTable &feature) 
@@ -158,8 +159,6 @@ float TDLearning::getTableValue(const FeatureTable &feature)
 	for (int i = 0; i < 8; i++) {
 		value += tableInner[feature.inner[i]];
 	}
-
-	value += feature.emptyNum;
 	return value;
 }
 

@@ -4,7 +4,7 @@
 #include "Fib2584/MoveDirection.h"
 #include "Fib2584/Statistic.h"
 #include "Fib2584Ai.h"
-
+#include <stdio.h>
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -50,11 +50,10 @@ int main(int argc, char* argv[])
 
 		if ( maxScore < iScore ){
 			maxScore = iScore;
-			cout << "games:" << i << "    ";
-			cout << "maxScore = " << maxScore << "    ";
+			printf("Games:%7d  maxScore = %6d", i, maxScore );
 			if ( maxTile < gameBoard.getMaxTile() ){
 				maxTile = gameBoard.getMaxTile();
-				cout << "maxTile = " << maxTile;
+				printf("  maxTile =  %5d", maxTile );
 			}
 			cout << endl;
 		}
@@ -63,10 +62,16 @@ int main(int argc, char* argv[])
 		statistic.updateMaxTile(gameBoard.getMaxTile());
 
 		if ( i % 10000 == 0 && i != 0 ){
+			printf("------------------------------------------------------\n");
+			printf("-                  One Line & One Ax                 -\n");
+			printf("------------------------------------------------------\n");
+			printf("Games:%7d\n", i );
 			statistic.setFinishTime();
 			statistic.show();
 			statistic.reset();
 			statistic.setStartTime();
+			printf("------------------------------------------------------");
+			cout << endl;
 		}
 		if( i % 50000 == 0 && i != 0 ){
 			ai.td.saveData();

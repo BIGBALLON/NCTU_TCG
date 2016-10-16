@@ -3,6 +3,7 @@
 
 #include "Fib2584/MoveDirection.h"
 #include "Fib2584Ai_TD.h"
+#include <iostream>
 
 using namespace std;
 
