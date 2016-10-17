@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
 		if ( i % 10000 == 0 && i != 0 ){
 			printf("------------------------------------------------------\n");
-			printf("-                  One Line & One Ax                 -\n");
+			printf("-          One Line & One Ax & One Box               -\n");
 			printf("------------------------------------------------------\n");
 			printf("Games:%7d\n", i );
 			statistic.setFinishTime();

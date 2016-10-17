@@ -30,16 +30,18 @@ private:
 
 		unsigned int ax[8];
 		unsigned int inner[8];
+		unsigned int box[8];
 		int reward;	
 	};
 
-	const float SCALE = 100.0;	
+	const float learningRate = 0.00075;	
 
 	string filename;
 	stack<FeatureTable> record;
 	bool trainMode;
 	float *tableAx;
 	float *tableInner;
+	float *tableBox;
 
 	float getTableValue(const FeatureTable &feature);
 };

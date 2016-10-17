@@ -21,6 +21,7 @@ public:
 	GameBoardAI(const GameBoardAI &src); // add
 	GameBoardAI(const int board[4][4]); // add
 	unsigned int getAx(int num);	//add
+	unsigned int getBox(int num);	//add
 
 	void initialize();
 	int move(MoveDirection moveDirection);
