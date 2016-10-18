@@ -92,6 +92,19 @@ void TDLearning::gameover(const int board[4][4])
 		FeatureTable feature = record.top();
 		record.pop();
 		float delta = -getTableValue(feature);
+		
+		int maxTile = 0;
+		for (int i = 0; i < 4; ++i){
+			for (int j = 0; j < 4; ++j){
+				if( board[i][j] > maxTile ){
+					maxTile = board[i][j];
+				}
+			}
+		}
+		if ( maxTile < 610 ){
+			delta *= 10;
+		}
+
 		for (int i = 0; i < 8; i++) {
 			tableAx[feature.ax[i]] += delta * learningRate;
 			tableBox[feature.box[i]] += delta * learningRate;

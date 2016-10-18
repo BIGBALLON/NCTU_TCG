@@ -1,7 +1,6 @@
 #include "GameBoardAI.h"
 #include <stdio.h>
 const int GameBoardAI::fibonacci_[32] = {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309};
-const unsigned int pow23[7] = {1,23,529,12167,279841,6436343};
 Random GameBoardAI::random_;
 
 GameBoardAI::GameBoardAI():

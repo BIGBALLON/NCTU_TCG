@@ -11,7 +11,7 @@
 #include <fstream>
 #include <iostream>
 
-#define NEGATIVE_INF -999999
+#define NEGATIVE_INF -9999999
 
 class TDLearning
 {
@@ -21,6 +21,8 @@ public:
 	void saveData();
 	MoveDirection Move(const int board[4][4]);
 	void gameover(const int board[4][4]);
+
+	const float learningRate = 0.0001;	
 private:
 	struct FeatureTable {
 		FeatureTable() {}
@@ -33,8 +35,6 @@ private:
 		unsigned int box[8];
 		int reward;	
 	};
-
-	const float learningRate = 0.00075;	
 
 	string filename;
 	stack<FeatureTable> record;

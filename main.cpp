@@ -62,15 +62,16 @@ int main(int argc, char* argv[])
 		statistic.updateMaxTile(gameBoard.getMaxTile());
 
 		if ( i % 10000 == 0 && i != 0 ){
-			printf("------------------------------------------------------\n");
-			printf("-          One Line & One Ax & One Box               -\n");
-			printf("------------------------------------------------------\n");
+			printf("--------------------------------------------------------------\n");
+			printf("-          One Line & One Ax & One Box & 610 limited         -\n");
+			printf("-               learning rate:  %.5f                      -\n",ai.td.learningRate);
+			printf("--------------------------------------------------------------\n");
 			printf("Games:%7d\n", i );
 			statistic.setFinishTime();
 			statistic.show();
 			statistic.reset();
 			statistic.setStartTime();
-			printf("------------------------------------------------------");
+			printf("--------------------------------------------------------------\n");
 			cout << endl;
 		}
 		if( i % 50000 == 0 && i != 0 ){
