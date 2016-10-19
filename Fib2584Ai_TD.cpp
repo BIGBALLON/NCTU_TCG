@@ -8,15 +8,19 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 :	filename(filename), 
 	trainMode(trainMode)
 {
+
+	maxTileFlag = false;
 	ifstream fin(filename, ifstream::in | ifstream::binary);
 
 	tableAx = new float[featureNumAx]; 
 	tableBox = new float[featureNumBox]; 
+	tableBox2 = new float[featureNumBox]; 
 	tableInner = new float[featureNumInner]; 
 
 	if (!fin.fail()) {
 		fin.read((char *)tableAx, featureNumAx * sizeof(float));
 		fin.read((char *)tableBox, featureNumBox * sizeof(float));
+		fin.read((char *)tableBox2, featureNumBox * sizeof(float));
 		fin.read((char *)tableInner, featureNumInner * sizeof(float));
 	}
 	fin.close();
@@ -28,12 +32,14 @@ TDLearning::~TDLearning()
 		ofstream fout(filename, ifstream::out | ifstream::binary | ifstream::trunc);
 		fout.write((char *)tableAx, featureNumAx * sizeof(float));
 		fout.write((char *)tableBox, featureNumBox * sizeof(float));
+		fout.write((char *)tableBox2, featureNumBox * sizeof(float));
 		fout.write((char *)tableInner, featureNumInner * sizeof(float));
 		fout.close();
 	}
 
 	delete [] tableAx;
 	delete [] tableBox;
+	delete [] tableBox2;
 	delete [] tableInner;
 }
 
@@ -45,6 +51,7 @@ void TDLearning::saveData()
 
 		fout.write((char *)tableAx, featureNumAx * sizeof(float));
 		fout.write((char *)tableBox, featureNumBox * sizeof(float));
+		fout.write((char *)tableBox2, featureNumBox * sizeof(float));
 		fout.write((char *)tableInner, featureNumInner * sizeof(float));
 		fout.close();
 	}
@@ -62,7 +69,6 @@ MoveDirection TDLearning::Move(const int board[4][4])
 
 	float bestValuePlusReward = NEGATIVE_INF;
 
-	// Find the best direction to move
 	for (int dir = 0; dir < 4; dir++) {
 		GameBoardAI newBoard(initBoard);
 		int reward = newBoard.move((MoveDirection)dir);
@@ -93,21 +99,24 @@ void TDLearning::gameover(const int board[4][4])
 		record.pop();
 		float delta = -getTableValue(feature);
 		
-		int maxTile = 0;
-		for (int i = 0; i < 4; ++i){
-			for (int j = 0; j < 4; ++j){
-				if( board[i][j] > maxTile ){
-					maxTile = board[i][j];
+		if (maxTileFlag){
+			int maxTile = 0;
+			for (int i = 0; i < 4; ++i){
+				for (int j = 0; j < 4; ++j){
+					if( board[i][j] > maxTile ){
+						maxTile = board[i][j];
+					}
 				}
 			}
+			if ( maxTile < 610 ){
+				delta *= 10;
+			}
 		}
-		if ( maxTile < 610 ){
-			delta *= 10;
-		}
-
+		
 		for (int i = 0; i < 8; i++) {
 			tableAx[feature.ax[i]] += delta * learningRate;
 			tableBox[feature.box[i]] += delta * learningRate;
+			tableBox2[feature.box2[i]] += delta * learningRate;
 			tableInner[feature.inner[i]] += delta * learningRate;
 		}
 		nextFeature = feature;
@@ -120,6 +129,7 @@ void TDLearning::gameover(const int board[4][4])
 			for (int i = 0; i < 8; i++) {
 				tableAx[feature.ax[i]] += delta * learningRate;
 				tableBox[feature.box[i]] += delta * learningRate;
+				tableBox2[feature.box2[i]] += delta * learningRate;
 				tableInner[feature.inner[i]] += delta * learningRate;
 			}
 
@@ -143,6 +153,7 @@ TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
 	for( int i = 0; i < 8; ++i ){
 		ax[i] = board.getAx(i);
 		box[i] = board.getBox(i);
+		box2[i] = board.getBox2(i);
 	}
 }
 
@@ -153,6 +164,7 @@ TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 		ax[i] = src.ax[i];
 		inner[i] = src.inner[i];
 		box[i] = src.box[i];
+		box2[i] = src.box2[i];
 	}
 }
 
@@ -163,6 +175,7 @@ float TDLearning::getTableValue(const FeatureTable &feature)
 	for (int i = 0; i < 8; i++) {
 		value += tableAx[feature.ax[i]];
 		value += tableBox[feature.box[i]];
+		value += tableBox2[feature.box2[i]];
 		value += tableInner[feature.inner[i]];
 	}
 	return value;

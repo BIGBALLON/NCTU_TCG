@@ -22,7 +22,8 @@ public:
 	MoveDirection Move(const int board[4][4]);
 	void gameover(const int board[4][4]);
 
-	const float learningRate = 0.0001;	
+	float learningRate = 0.01;	
+	bool maxTileFlag;
 private:
 	struct FeatureTable {
 		FeatureTable() {}
@@ -33,6 +34,7 @@ private:
 		unsigned int ax[8];
 		unsigned int inner[8];
 		unsigned int box[8];
+		unsigned int box2[8];
 		int reward;	
 	};
 
@@ -42,6 +44,7 @@ private:
 	float *tableAx;
 	float *tableInner;
 	float *tableBox;
+	float *tableBox2;
 
 	float getTableValue(const FeatureTable &feature);
 };

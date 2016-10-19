@@ -16,6 +16,11 @@ void Statistic::reset()
 	timeDifference_ = 0;
 }
 
+
+int Statistic::getAverageScore()
+{
+	return iTotalScore_ / iGameCount_;
+}
 void Statistic::show()
 {
 	cout << "Win rate: " << iWinGame_ / (double)iGameCount_ * 100.0 << "%\n";

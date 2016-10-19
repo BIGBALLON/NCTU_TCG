@@ -19,6 +19,7 @@ public:
 	void updateMaxTile(int iTile);
 	void setStartTime();
 	void setFinishTime();
+	int getAverageScore();
 private:
 	int iMaxTileOverall_;
 	int iWinGame_;

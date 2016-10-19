@@ -47,23 +47,37 @@ int main(int argc, char* argv[])
 		statistic.increaseOneGame();
 
 		statistic.updateScore(iScore);
-
+		int maxTileTemp = gameBoard.getMaxTile();
 		if ( maxScore < iScore ){
 			maxScore = iScore;
-			printf("Games:%7d  maxScore = %6d", i, maxScore );
-			if ( maxTile < gameBoard.getMaxTile() ){
-				maxTile = gameBoard.getMaxTile();
-				printf("  maxTile =  %5d", maxTile );
+			
+			if( maxTile < maxTileTemp ){
+				maxTile = maxTileTemp;
 			}
+			printf("Games:%7d  maxScore = %6d  maxTile =  %5d", i, maxScore, maxTile );
 			cout << endl;
 		}
-
+		if ( maxTileTemp > 10000 ){
+			printf("Games:%7d  maxScore = %6d  maxTile =  %5d", i, maxScore, maxTileTemp );
+			cout << endl;
+		}
+		if( statistic.getAverageScore() > 40500 ){
+			ai.td.learningRate = 0.0001;
+			ai.td.maxTileFlag = true;
+		}else if( statistic.getAverageScore() > 38000 ){
+			ai.td.learningRate = 0.0002;
+			ai.td.maxTileFlag = true;
+		}else if( statistic.getAverageScore() > 32000 ){
+			ai.td.learningRate = 0.001;
+		}else if( statistic.getAverageScore() > 27000 ){
+			ai.td.learningRate = 0.005;
+		}
 
 		statistic.updateMaxTile(gameBoard.getMaxTile());
 
 		if ( i % 10000 == 0 && i != 0 ){
 			printf("--------------------------------------------------------------\n");
-			printf("-          One Line & One Ax & One Box & 610 limited         -\n");
+			printf("-          One Line & One Ax & Two Box & 610 limited         -\n");
 			printf("-               learning rate:  %.5f                      -\n",ai.td.learningRate);
 			printf("--------------------------------------------------------------\n");
 			printf("Games:%7d\n", i );

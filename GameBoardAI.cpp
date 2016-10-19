@@ -146,6 +146,7 @@ BitBoard GameBoardAI::getColumn( int column )
        	   (tempBoard & BitBoard(0x0000, 0x000000000000001f));
 }
 
+
 unsigned int GameBoardAI::getAx( int num )
 {
 	unsigned int result = 0;
@@ -313,6 +314,93 @@ unsigned int GameBoardAI::getBox( int num )
 		result = result * 22 + ( boardTemp >> 55 & 0x1f );
 		result = result * 22 + ( boardTemp >> 50 & 0x1f );
 		result = result * 22 + ( boardTemp >> 45 & 0x1f );
+
+		return result;
+	}
+}
+
+
+unsigned int GameBoardAI::getBox2( int num )
+{
+	unsigned int result = 0;
+	if ( num == 0 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 45 & 0x1f;
+		result = result * 22 + ( boardTemp >> 25 & 0x1f );
+		result = result * 22 + ( boardTemp >> 5 & 0x1f );
+		result = result * 22 + ( boardTemp >> 40 & 0x1f );
+		result = result * 22 + ( boardTemp >> 20 & 0x1f );
+		result = result * 22 + ( boardTemp & 0x1f );
+
+		return result;
+	}else if ( num == 1 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 25 & 0x1f;
+		result = result * 22 + ( boardTemp >> 30 & 0x1f );
+		result = result * 22 + ( boardTemp >> 35 & 0x1f );
+		result = result * 22 + ( boardTemp >> 5 & 0x1f );
+		result = result * 22 + ( boardTemp >> 10 & 0x1f );
+		result = result * 22 + ( boardTemp >> 15 & 0x1f );
+
+		return result;
+	}else if( num == 2 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 30 & 0x1f;
+		result = result * 22 + ( boardTemp >> 50 & 0x1f );
+		result = result * 22 + ( board_ >> 70 & 0x1f );
+		result = result * 22 + ( boardTemp >> 35 & 0x1f );
+		result = result * 22 + ( boardTemp >> 55 & 0x1f );
+		result = result * 22 + ( board_ >> 75 & 0x1f );
+
+		return result;
+	}else if( num == 3 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 50 & 0x1f;
+		result = result * 22 + ( boardTemp >> 45 & 0x1f );
+		result = result * 22 + ( boardTemp >> 40 & 0x1f );
+		result = result * 22 + ( board_ >> 70 & 0x1f );
+		result = result * 22 + ( board_ >> 65 & 0x1f );
+		result = result * 22 + ( board_ >> 60 & 0x1f );
+
+		return result;
+	}else if( num == 4 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 50 & 0x1f;
+		result = result * 22 + ( boardTemp >> 30 & 0x1f );
+		result = result * 22 + ( boardTemp >> 10 & 0x1f );
+		result = result * 22 + ( boardTemp >> 55 & 0x1f );
+		result = result * 22 + ( boardTemp >> 35 & 0x1f );
+		result = result * 22 + ( boardTemp >> 15 & 0x1f );
+
+		return result;
+	}else if( num == 5 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 45 & 0x1f;
+		result = result * 22 + ( boardTemp >> 50 & 0x1f );
+		result = result * 22 + ( boardTemp >> 55 & 0x1f );
+		result = result * 22 + ( board_ >> 65 & 0x1f );
+		result = result * 22 + ( board_ >> 70 & 0x1f );
+		result = result * 22 + ( board_ >> 75 & 0x1f );
+
+		return result;
+	}else if( num == 6 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 25 & 0x1f;
+		result = result * 22 + ( boardTemp >> 45 & 0x1f );
+		result = result * 22 + ( board_ >> 65 & 0x1f );
+		result = result * 22 + ( boardTemp >> 20 & 0x1f );
+		result = result * 22 + ( boardTemp >> 40 & 0x1f );
+		result = result * 22 + ( board_ >> 60 & 0x1f );
+
+		return result;
+	}else if( num == 7 ){
+		unsigned long long boardTemp = board_.get_right();
+		result = boardTemp >> 30 & 0x1f;
+		result = result * 22 + ( boardTemp >> 25 & 0x1f );
+		result = result * 22 + ( boardTemp >> 20 & 0x1f );
+		result = result * 22 + ( boardTemp >> 10 & 0x1f );
+		result = result * 22 + ( boardTemp >> 5 & 0x1f );
+		result = result * 22 + ( boardTemp & 0x1f );
 
 		return result;
 	}
