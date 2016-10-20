@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 			printf("Games:%7d  maxScore = %6d  maxTile =  %5d", i, maxScore, maxTileTemp );
 			cout << endl;
 		}
-		if( statistic.getAverageScore() > 40500 ){
+		/*if( statistic.getAverageScore() > 40000 ){
 			ai.td.learningRate = 0.0001;
 			ai.td.maxTileFlag = true;
 		}else if( statistic.getAverageScore() > 38000 ){
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 		}else if( statistic.getAverageScore() > 27000 ){
 			ai.td.learningRate = 0.005;
 		}
-
+*/
 		statistic.updateMaxTile(gameBoard.getMaxTile());
 
 		if ( i % 10000 == 0 && i != 0 ){

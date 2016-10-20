@@ -4,8 +4,8 @@
 #include <iostream>
 #include "Fib2584/MoveDirection.h"
 #include "Fib2584/MoveTable.h"
-#include "Fib2584/BitBoard.h"
 #include "Fib2584/Random.h"
+#include "BitBoardAI.h"
 
 using namespace std;
 
@@ -20,10 +20,12 @@ public:
 
 	GameBoardAI(const GameBoardAI &src); // add
 	GameBoardAI(const int board[4][4]); // add
+
+	unsigned int getLine(int num);
 	unsigned int getAx(int num);	//add
 	unsigned int getBox(int num);	//add
 	unsigned int getBox2(int num);	//add
-
+	
 	void initialize();
 	int move(MoveDirection moveDirection);
 	void addRandomTile();
@@ -32,16 +34,16 @@ public:
 	int getMaxTile();
 	void showBoard();
 	bool operator==(GameBoardAI gameBoard);
-	BitBoard getRow(int row);
-	BitBoard getColumn(int column);
-	BitBoard restoreRow(BitBoard rowBits, int row);
-	BitBoard restoreColumn(BitBoard columnBits, int column);
+	BitBoardAI getRow(int row);
+	BitBoardAI getColumn(int column);
+	BitBoardAI restoreRow(BitBoardAI rowBits, int row);
+	BitBoardAI restoreColumn(BitBoardAI columnBits, int column);
 	int countEmptyTile();
 	int getTile(int row, int column);
 	int getFibonacci(int index);
 
 private:
-	BitBoard board_;
+	BitBoardAI board_;
 };
 
 #endif

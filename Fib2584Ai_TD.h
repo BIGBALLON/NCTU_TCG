@@ -12,6 +12,8 @@
 #include <iostream>
 
 #define NEGATIVE_INF -9999999
+#define BOX_NUM 22
+#define LINE_NUM 32
 
 class TDLearning
 {

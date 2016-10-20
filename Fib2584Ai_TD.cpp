@@ -1,12 +1,11 @@
 #include "Fib2584Ai_TD.h"
 using namespace std;
-const int featureNumInner = 32 * 32 * 32 * 32;
-const long long featureNumAx = 22 * 22 * 22 * 22 * 22 * 22;
-const long long featureNumBox = 22 * 22 * 22 * 22 * 22 * 22;
+const int featureNumInner = LINE_NUM * LINE_NUM * LINE_NUM * LINE_NUM;
+const long long featureNumAx = BOX_NUM * BOX_NUM * BOX_NUM * BOX_NUM * BOX_NUM * BOX_NUM;
+const long long featureNumBox = featureNumAx;
 
 TDLearning::TDLearning(bool trainMode, const std::string &filename)
-:	filename(filename), 
-	trainMode(trainMode)
+:	filename(filename), trainMode(trainMode)
 {
 
 	maxTileFlag = false;
@@ -98,7 +97,7 @@ void TDLearning::gameover(const int board[4][4])
 		FeatureTable feature = record.top();
 		record.pop();
 		float delta = -getTableValue(feature);
-		
+		/*
 		if (maxTileFlag){
 			int maxTile = 0;
 			for (int i = 0; i < 4; ++i){
@@ -109,10 +108,10 @@ void TDLearning::gameover(const int board[4][4])
 				}
 			}
 			if ( maxTile < 610 ){
-				delta *= 10;
+				delta *= 15;
 			}
 		}
-		
+		*/
 		for (int i = 0; i < 8; i++) {
 			tableAx[feature.ax[i]] += delta * learningRate;
 			tableBox[feature.box[i]] += delta * learningRate;
@@ -138,14 +137,25 @@ void TDLearning::gameover(const int board[4][4])
 	}
 }
 
+unsigned int TDLearning::FeatureTable::reverseFeature(unsigned int a)
+{
+	unsigned int result = 0;
+
+	for (int i = 0; i < 4; i++) {
+		result = (result << 5) + (a & 0x1f);
+		a >>= 5;
+	}
+	return result;
+}
+
 TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
 :	reward(reward)
 {
 
-	inner[0] = (unsigned int)(board.getRow(1).get_right());
-	inner[1] = (unsigned int)(board.getRow(2).get_right());
-	inner[2] = (unsigned int)(board.getColumn(1).get_right());
-	inner[3] = (unsigned int)(board.getColumn(2).get_right());
+	inner[0] = board.getLine(1);
+	inner[1] = board.getLine(2);
+	inner[2] = board.getLine(5);
+	inner[3] = board.getLine(6);
 	inner[4] = reverseFeature(inner[0]);
 	inner[5] = reverseFeature(inner[1]);
 	inner[6] = reverseFeature(inner[2]);
@@ -181,14 +191,3 @@ float TDLearning::getTableValue(const FeatureTable &feature)
 	return value;
 }
 
-unsigned int TDLearning::FeatureTable::reverseFeature(unsigned int a)
-{
-	unsigned int result = 0;
-
-	for (int i = 0; i < 4; i++) {
-		result = (result << 5) + (a & 0x1f);
-		a >>= 5;
-	}
-	
-	return result;
-}
