@@ -12,7 +12,7 @@
 #include <iostream>
 
 #define NEGATIVE_INF -9999999
-#define BOX_NUM 22
+#define FEATURE_NUM 22
 #define LINE_NUM 32
 
 class TDLearning
@@ -34,9 +34,10 @@ private:
 		unsigned int reverseFeature(unsigned int a);
 
 		unsigned int ax[8];
-		unsigned int inner[8];
+		unsigned int ax2[8];
 		unsigned int box[8];
 		unsigned int box2[8];
+		unsigned int line[8];
 		int reward;	
 	};
 
@@ -44,9 +45,10 @@ private:
 	stack<FeatureTable> record;
 	bool trainMode;
 	float *tableAx;
-	float *tableInner;
+	float *tableAx2;
 	float *tableBox;
 	float *tableBox2;
+	float *tableLine;
 
 	float getTableValue(const FeatureTable &feature);
 };

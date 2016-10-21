@@ -21,10 +21,11 @@ public:
 	GameBoardAI(const GameBoardAI &src); // add
 	GameBoardAI(const int board[4][4]); // add
 
-	unsigned int getLine(int num);
 	unsigned int getAx(int num);	//add
+	unsigned int getAx2(int num);	//add
 	unsigned int getBox(int num);	//add
 	unsigned int getBox2(int num);	//add
+	unsigned int getLine(int num);	//add
 	
 	void initialize();
 	int move(MoveDirection moveDirection);
