@@ -24,7 +24,7 @@ public:
 	MoveDirection Move(const int board[4][4]);
 	void gameover(const int board[4][4]);
 
-	float learningRate = 0.01;	
+	float learningRate = 0.00008;	
 	bool maxTileFlag;
 private:
 	struct FeatureTable {
