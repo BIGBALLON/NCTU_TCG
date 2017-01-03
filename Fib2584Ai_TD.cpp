@@ -15,30 +15,33 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 	tableAx = new float[featureNum]; 
 	tableAx2 = new float[featureNum]; 
 	tableBox = new float[featureNum]; 
-	//tableBox2 = new float[featureNum]; 
+	tableBox2 = new float[featureNum]; 
 	tableLine = new float[featureNumInner]; 
 
 	tableAxA = new float[featureNum]; 
 	tableAx2A = new float[featureNum]; 
 	tableBoxA = new float[featureNum]; 
-	//tableBox2A = new float[featureNum]; 
+	tableBox2A = new float[featureNum]; 
 	tableLineA = new float[featureNumInner]; 
 
 	tableAxE = new float[featureNum]; 
 	tableAx2E = new float[featureNum]; 
 	tableBoxE = new float[featureNum]; 
-	//tableBox2E = new float[featureNum]; 
+	tableBox2E = new float[featureNum]; 
 	tableLineE = new float[featureNumInner]; 
 	for (int i = 0; i < featureNum; ++i){
 		tableAx[i] = 0.0;
 		tableAx2[i] = 0.0;
 		tableBox[i] = 0.0;
+		tableBox2[i] = 0.0;
 		tableAxA[i] = 0.0;
 		tableAxE[i] = 0.0;
 		tableAx2A[i] = 0.0;
 		tableAx2E[i] = 0.0;
 		tableBoxA[i] = 0.0;
 		tableBoxE[i] = 0.0;
+		tableBox2A[i] = 0.0;
+		tableBox2E[i] = 0.0;
 	}
 	for (int i = 0; i < featureNumInner; ++i){
 		tableLineA[i] = 0.0;
@@ -46,12 +49,11 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 		tableLine[i] = 0.0;
 	}
 
-	printf(" hwhwh \n");
 	if (!fin.fail()) {
 		fin.read((char *)tableAx, featureNum * sizeof(float));
 		fin.read((char *)tableAx2, featureNum * sizeof(float));
 		fin.read((char *)tableBox, featureNum * sizeof(float));
-		//fin.read((char *)tableBox2, featureNum * sizeof(float));
+		fin.read((char *)tableBox2, featureNum * sizeof(float));
 		fin.read((char *)tableLine, featureNumInner * sizeof(float));
 	}
 	
@@ -61,7 +63,7 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 		fin2.read((char *)tableAxA, featureNum * sizeof(float));
 		fin2.read((char *)tableAx2A, featureNum * sizeof(float));
 		fin2.read((char *)tableBoxA, featureNum * sizeof(float));
-		//fin2.read((char *)tableBox2A, featureNum * sizeof(float));
+		fin2.read((char *)tableBox2A, featureNum * sizeof(float));
 		fin2.read((char *)tableLineA, featureNumInner * sizeof(float));
 	}
 
@@ -71,7 +73,7 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 		fin3.read((char *)tableAxE, featureNum * sizeof(float));
 		fin3.read((char *)tableAx2E, featureNum * sizeof(float));
 		fin3.read((char *)tableBoxE, featureNum * sizeof(float));
-		//fin3.read((char *)tableBox2E, featureNum * sizeof(float));
+		fin3.read((char *)tableBox2E, featureNum * sizeof(float));
 		fin3.read((char *)tableLineE, featureNumInner * sizeof(float));
 	}
 
@@ -80,7 +82,6 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 TDLearning::initialize()
 {
 
-	
 
 }
 
@@ -92,7 +93,7 @@ TDLearning::~TDLearning()
 		fout.write((char *)tableAx, featureNum * sizeof(float));
 		fout.write((char *)tableAx2, featureNum * sizeof(float));
 		fout.write((char *)tableBox, featureNum * sizeof(float));
-		//fout.write((char *)tableBox2, featureNum * sizeof(float));
+		fout.write((char *)tableBox2, featureNum * sizeof(float));
 		fout.write((char *)tableLine, featureNumInner * sizeof(float));
 		fout.close();
 
@@ -101,7 +102,7 @@ TDLearning::~TDLearning()
 		fout2.write((char *)tableAxA, featureNum * sizeof(float));
 		fout2.write((char *)tableAx2A, featureNum * sizeof(float));
 		fout2.write((char *)tableBoxA, featureNum * sizeof(float));
-		//fout2.write((char *)tableBox2A, featureNum * sizeof(float));
+		fout2.write((char *)tableBox2A, featureNum * sizeof(float));
 		fout2.write((char *)tableLineA, featureNumInner * sizeof(float));
 		fout2.close();
 
@@ -110,7 +111,7 @@ TDLearning::~TDLearning()
 		fout3.write((char *)tableAxE, featureNum * sizeof(float));
 		fout3.write((char *)tableAx2E, featureNum * sizeof(float));
 		fout3.write((char *)tableBoxE, featureNum * sizeof(float));
-		//fout3.write((char *)tableBox2E, featureNum * sizeof(float));
+		fout3.write((char *)tableBox2E, featureNum * sizeof(float));
 		fout3.write((char *)tableLineE, featureNumInner * sizeof(float));
 		fout3.close();
 	}
@@ -119,17 +120,17 @@ TDLearning::~TDLearning()
 	delete [] tableAx;
 	delete [] tableAx2;
 	delete [] tableBox;
-	//delete [] tableBox2;
+	delete [] tableBox2;
 	delete [] tableLine;
 	delete [] tableAxA;
 	delete [] tableAx2A;
 	delete [] tableBoxA;
-	//delete [] tableBox2A;
+	delete [] tableBox2A;
 	delete [] tableLineA;
 	delete [] tableAxE;
 	delete [] tableAx2E;
 	delete [] tableBoxE;
-	//delete [] tableBox2E;
+	delete [] tableBox2E;
 	delete [] tableLineE;
 }
 
@@ -142,7 +143,7 @@ void TDLearning::saveData()
 		fout.write((char *)tableAx, featureNum * sizeof(float));
 		fout.write((char *)tableAx2, featureNum * sizeof(float));
 		fout.write((char *)tableBox, featureNum * sizeof(float));
-		//fout.write((char *)tableBox2, featureNum * sizeof(float));
+		fout.write((char *)tableBox2, featureNum * sizeof(float));
 		fout.write((char *)tableLine, featureNumInner * sizeof(float));
 		fout.close();
 
@@ -151,7 +152,7 @@ void TDLearning::saveData()
 		fout2.write((char *)tableAxA, featureNum * sizeof(float));
 		fout2.write((char *)tableAx2A, featureNum * sizeof(float));
 		fout2.write((char *)tableBoxA, featureNum * sizeof(float));
-		//fout2.write((char *)tableBox2A, featureNum * sizeof(float));
+		fout2.write((char *)tableBox2A, featureNum * sizeof(float));
 		fout2.write((char *)tableLineA, featureNumInner * sizeof(float));
 		fout2.close();
 
@@ -160,7 +161,7 @@ void TDLearning::saveData()
 		fout3.write((char *)tableAxE, featureNum * sizeof(float));
 		fout3.write((char *)tableAx2E, featureNum * sizeof(float));
 		fout3.write((char *)tableBoxE, featureNum * sizeof(float));
-		//fout3.write((char *)tableBox2E, featureNum * sizeof(float));
+		fout3.write((char *)tableBox2E, featureNum * sizeof(float));
 		fout3.write((char *)tableLineE, featureNumInner * sizeof(float));
 		fout3.close();
 	}
@@ -207,7 +208,7 @@ void TDLearning::gameover(const int board[4][4])
 		FeatureTable feature = record.top();
 		record.pop();
 		float delta = -getTableValue(feature);
-		float value = delta * learningRate / 32.0, beta;
+		float value = delta * learningRate / 40.0, beta;
 		for (int i = 0; i < 8; i++) {
 
 			tableAxE[feature.ax[i]] += delta;
@@ -248,12 +249,17 @@ void TDLearning::gameover(const int board[4][4])
 			}
 			
 			tableBox[feature.box[i]] += value * beta;
-/*
+
 			tableBox2E[feature.box2[i]] += delta;
-			tableBox2A[feature.box2[i]] += fabs(delta);		
-			beta = fabs(tableBox2E[feature.box2[i]])/tableBox2A[feature.box2[i]];
+			tableBox2A[feature.box2[i]] += fabs(delta);	
+			if( tableBox2A[feature.box2[i]] == 0 ){
+				beta = 1.0;
+			}else{
+				beta = fabs(tableBox2E[feature.box2[i]])/tableBox2A[feature.box2[i]];
+			}	
+			
 			tableBox2[feature.box2[i]] += value * beta;
-*/
+
 			tableLineE[feature.line[i]] += delta;
 			tableLineA[feature.line[i]] += fabs(delta);		
 			if( tableLineA[feature.line[i]] == 0 ){
@@ -271,7 +277,7 @@ void TDLearning::gameover(const int board[4][4])
 			FeatureTable feature = record.top();
 			record.pop();
 			delta = getTableValue(nextFeature) + nextFeature.reward - getTableValue(feature);
-			value = delta * learningRate / 32.0;
+			value = delta * learningRate / 40.0;
 			for (int i = 0; i < 8; i++) {
 	
 				tableAxE[feature.ax[i]] += delta;
@@ -310,12 +316,16 @@ void TDLearning::gameover(const int board[4][4])
 				}
 				
 				tableBox[feature.box[i]] += value * beta;
-	/*
+	
 				tableBox2E[feature.box2[i]] += delta;
 				tableBox2A[feature.box2[i]] += fabs(delta);		
-				beta = fabs(tableBox2E[feature.box2[i]])/tableBox2A[feature.box2[i]];
+				if( tableBox2A[feature.box2[i]] == 0 ){
+					beta = 1.0;
+				}else{
+					beta = fabs(tableBox2E[feature.box2[i]])/tableBox2A[feature.box2[i]];
+				}	
 				tableBox2[feature.box2[i]] += value * beta;
-	*/
+	
 				tableLineE[feature.line[i]] += delta;
 				tableLineA[feature.line[i]] += fabs(delta);		
 				if( tableLineA[feature.line[i]] == 0 ){
@@ -358,7 +368,7 @@ TDLearning::FeatureTable::FeatureTable(GameBoardAI &board, int reward)
 		ax[i] = board.getAx(i);
 		ax2[i] = board.getAx2(i);
 		box[i] = board.getBox(i);
-		//box2[i] = board.getBox2(i);
+		box2[i] = board.getBox2(i);
 	}
 }
 
@@ -369,7 +379,7 @@ TDLearning::FeatureTable::FeatureTable(const FeatureTable &src)
 		ax[i] = src.ax[i];
 		ax2[i] = src.ax2[i];
 		box[i] = src.box[i];
-		//box2[i] = src.box2[i];
+		box2[i] = src.box2[i];
 		line[i] = src.line[i];
 	}
 }
@@ -382,7 +392,7 @@ float TDLearning::getTableValue(const FeatureTable &feature)
 		value += tableAx[feature.ax[i]];
 		value += tableAx2[feature.ax2[i]];
 		value += tableBox[feature.box[i]];
-		//value += tableBox2[feature.box2[i]];
+		value += tableBox2[feature.box2[i]];
 		value += tableLine[feature.line[i]];
 	}
 	return value;
