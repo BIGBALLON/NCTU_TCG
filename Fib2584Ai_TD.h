@@ -12,7 +12,7 @@
 #include <iostream>
 #include <cmath>
 #define NEGATIVE_INF -9999999
-#define FEATURE_NUM 22
+#define FEATURE_NUM 24
 #define LINE_NUM 32
 
 class TDLearning

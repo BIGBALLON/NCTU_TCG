@@ -210,60 +210,60 @@ unsigned int GameBoardAI::getAx( int num )
 	unsigned long long boardRight = board_.get_right();
 	if ( num == 0 ){
 		result = ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
 	}else if ( num == 1 ){
 		result = boardRight >> 45 & 0x1f;
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
 	}else if( num == 2 ){
 		result = boardRight >> 25 & 0x1f;
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
 	}else if( num == 3 ){
 		result = boardRight >> 30 & 0x1f;
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
 	}else if( num == 4 ){
 		result = boardRight >> 45 & 0x1f;
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
 	}else if( num == 5 ){
 		result = boardRight >> 25 & 0x1f;
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight  & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight  & 0x1f );
 	}else if( num == 6 ){
 		result = boardRight >> 30 & 0x1f;
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
 	}else if( num == 7 ){
 		result = boardRight >> 50 & 0x1f;
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
 	}
 	return result;
 }
@@ -275,60 +275,60 @@ unsigned int GameBoardAI::getAx2( int num )
 	unsigned long long boardRight = board_.get_right();
 	if ( num == 0 ){
 		result = boardRight >> 15 & 0x1f;
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
 	}else if ( num == 1 ){
 		result = boardLeft >> 11 & 0x1f;
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
 	}else if( num == 2 ){
 		result = ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
 	}else if( num == 3 ){
 		result = boardRight & 0x1f;
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
 	}else if( num == 4 ){
 		result = boardRight  & 0x1f;
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
 	}else if( num == 5 ){
 		result = boardRight >> 15 & 0x1f;
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
 	}else if( num == 6 ){
 		result = boardLeft >> 11 & 0x1f;
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
 	}else if( num == 7 ){
 		result = ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
 	}
 	return result;
 }
@@ -340,60 +340,60 @@ unsigned int GameBoardAI::getBox( int num )
 	unsigned long long boardRight = board_.get_right();
 	if ( num == 0 ){
 		result = ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
 	}else if ( num == 1 ){
 		result = boardLeft >> 1 & 0x1f;
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
 	}else if( num == 2 ){
 		result = boardRight >> 20 & 0x1f;
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
 	}else if( num == 3 ){
 		result = boardRight >> 10 & 0x1f;
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
 	}else if( num == 4 ){
 		result = ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
 	}else if( num == 5 ){
 		result = boardRight >> 25 & 0x1f;
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight  & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight  & 0x1f );
 	}else if( num == 6 ){
 		result = boardRight >> 5 & 0x1f;
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
 	}else if( num == 7 ){
 		result = boardRight >> 35 & 0x1f;
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
 	}
 	return result;
 }
@@ -406,60 +406,60 @@ unsigned int GameBoardAI::getBox2( int num )
 	unsigned long long boardRight = board_.get_right();
 	if ( num == 0 ){
 		result = boardRight >> 45 & 0x1f;
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
 	}else if ( num == 1 ){
 		result = boardRight >> 25 & 0x1f;
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
 	}else if( num == 2 ){
 		result = boardRight >> 30 & 0x1f;
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
 	}else if( num == 3 ){
 		result = boardRight >> 50 & 0x1f;
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
 	}else if( num == 4 ){
 		result = boardRight >> 50 & 0x1f;
-		result = result * 22 + ( boardRight >> 30 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardRight >> 35 & 0x1f );
-		result = result * 22 + ( boardRight >> 15 & 0x1f );
+		result = result * 24 + ( boardRight >> 30 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardRight >> 35 & 0x1f );
+		result = result * 24 + ( boardRight >> 15 & 0x1f );
 	}else if( num == 5 ){
 		result = boardRight >> 45 & 0x1f;
-		result = result * 22 + ( boardRight >> 50 & 0x1f );
-		result = result * 22 + ( boardRight >> 55 & 0x1f );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( boardLeft >> 6 & 0x1f );
-		result = result * 22 + ( boardLeft >> 11 & 0x1f );
+		result = result * 24 + ( boardRight >> 50 & 0x1f );
+		result = result * 24 + ( boardRight >> 55 & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( boardLeft >> 6 & 0x1f );
+		result = result * 24 + ( boardLeft >> 11 & 0x1f );
 	}else if( num == 6 ){
 		result = boardRight >> 25 & 0x1f;
-		result = result * 22 + ( boardRight >> 45 & 0x1f );
-		result = result * 22 + ( boardLeft >> 1 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 40 & 0x1f );
-		result = result * 22 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
+		result = result * 24 + ( boardRight >> 45 & 0x1f );
+		result = result * 24 + ( boardLeft >> 1 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 40 & 0x1f );
+		result = result * 24 + ( ( ( boardLeft & 0x1 ) << 4 ) | ( boardRight >> 60 & 0xf ) );
 	}else if( num == 7 ){
 		result = boardRight >> 30 & 0x1f;
-		result = result * 22 + ( boardRight >> 25 & 0x1f );
-		result = result * 22 + ( boardRight >> 20 & 0x1f );
-		result = result * 22 + ( boardRight >> 10 & 0x1f );
-		result = result * 22 + ( boardRight >> 5 & 0x1f );
-		result = result * 22 + ( boardRight & 0x1f );
+		result = result * 24 + ( boardRight >> 25 & 0x1f );
+		result = result * 24 + ( boardRight >> 20 & 0x1f );
+		result = result * 24 + ( boardRight >> 10 & 0x1f );
+		result = result * 24 + ( boardRight >> 5 & 0x1f );
+		result = result * 24 + ( boardRight & 0x1f );
 	}
 	return result;
 }
