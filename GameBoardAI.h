@@ -45,6 +45,7 @@ public:
 
 private:
 	BitBoardAI board_;
+	int cnt;
 };
 
 #endif

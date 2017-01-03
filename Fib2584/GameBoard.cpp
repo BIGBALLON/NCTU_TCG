@@ -11,6 +11,7 @@ board_(0)
 void GameBoard::initialize()
 {
 	board_ = 0;
+	cnt = 0;
 	addRandomTile();
 	addRandomTile();
 }
@@ -41,10 +42,16 @@ int GameBoard::move(MoveDirection moveDirection)
 
 void GameBoard::addRandomTile()
 {
-	int oneTileRate = 6;
+	cnt++;
 	int emptyTileNum = countEmptyTile();
 	int randomTileLocation = random_.get_rand_num() % emptyTileNum;
-	BitBoard randomTile = (random_.get_rand_num() % 8 < oneTileRate)?0x1:0x3;
+	//BitBoard randomTile = (random_.get_rand_num() % 8 < oneTileRate)?0x1:0x3;
+	BitBoard randomTile = 0x1;
+	if( cnt == 4 ){
+		randomTile = 0x3;
+		cnt %= 4;
+	}
+	
 	int count = 0;
 	for(BitBoard tileMask = 0x1f;tileMask != 0;tileMask <<= 5, randomTile <<= 5) {
 		if((board_ & tileMask) != 0)

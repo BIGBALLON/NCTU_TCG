@@ -35,6 +35,7 @@ private:
 	int getFibonacci(int index);
 private:
 	BitBoard board_;
+	int cnt;
 };
 
 #endif

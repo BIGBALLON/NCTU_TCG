@@ -36,6 +36,7 @@ GameBoardAI::GameBoardAI(const int board[4][4])
 void GameBoardAI::initialize()
 {
 	board_ = 0;
+	cnt = 0;
 	addRandomTile();
 	addRandomTile();
 }
@@ -66,10 +67,16 @@ int GameBoardAI::move(MoveDirection moveDirection)
 
 void GameBoardAI::addRandomTile()
 {
-	int oneTileRate = 6;
+	cnt++;
 	int emptyTileNum = countEmptyTile();
 	int randomTileLocation = random_.get_rand_num() % emptyTileNum;
-	BitBoardAI randomTile = (random_.get_rand_num() % 8 < oneTileRate)?0x1:0x3;
+	//BitBoardAI randomTile = (random_.get_rand_num() % 8 < oneTileRate)?0x1:0x3;
+	BitBoardAI randomTile = 0x1;
+	if( cnt == 4 ){
+		randomTile = 0x3;
+		cnt %= 4;
+	}
+	
 	int count = 0;
 	for(BitBoardAI tileMask = 0x1f;tileMask != 0;tileMask <<= 5, randomTile <<= 5) {
 		if((board_ & tileMask) != 0)

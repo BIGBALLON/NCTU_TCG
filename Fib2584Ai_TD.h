@@ -10,7 +10,7 @@
 #include <stack>
 #include <fstream>
 #include <iostream>
-
+#include <cmath>
 #define NEGATIVE_INF -9999999
 #define FEATURE_NUM 22
 #define LINE_NUM 32
@@ -18,17 +18,14 @@
 class TDLearning
 {
 public:
-	TDLearning(bool trainMode = false, const string &filename = string("table"));
+	TDLearning(bool trainMode = true, const string &filename = string("table"));
 	~TDLearning();
+	initialize();
 	void saveData();
 	MoveDirection Move(const int board[4][4]);
-	int generateEvilMove(const int board[4][4]);
 	void gameover(const int board[4][4]);
 
-	float learningRate;
-	bool maxTileFlag;
-	int playStep;
-	int evilStep;
+	float learningRate = 1.00;	
 private:
 	struct FeatureTable {
 		FeatureTable() {}
@@ -41,6 +38,18 @@ private:
 		unsigned int box[8];
 		unsigned int box2[8];
 		unsigned int line[8];
+
+		unsigned int axE[8];
+		unsigned int ax2E[8];
+		unsigned int boxE[8];
+		unsigned int box2E[8];
+		unsigned int lineE[8];
+
+		unsigned int axA[8];
+		unsigned int ax2A[8];
+		unsigned int boxA[8];
+		unsigned int box2A[8];
+		unsigned int lineA[8];
 		int reward;	
 	};
 
@@ -52,6 +61,18 @@ private:
 	float *tableBox;
 	float *tableBox2;
 	float *tableLine;
+
+	float *tableAxA;
+	float *tableAx2A;
+	float *tableBoxA;
+	float *tableBox2A;
+	float *tableLineA;
+
+	float *tableAxE;
+	float *tableAx2E;
+	float *tableBoxE;
+	float *tableBox2E;
+	float *tableLineE;
 
 	float getTableValue(const FeatureTable &feature);
 };
