@@ -14,7 +14,11 @@ void Fib2584Ai::initialize(int argc, char* argv[])
 
 MoveDirection Fib2584Ai::generateMove(int board[4][4])
 {
-    return td.Move(board);
+	if ( td.trainMode ){
+		return td.Move(board);
+	}else{
+		return td.MovePlay(board);
+	} 
 }
 
 

@@ -11,7 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
-#define NEGATIVE_INF -9999999
+#define NEGATIVE_INF -99999999
 #define FEATURE_NUM 24
 #define LINE_NUM 32
 
@@ -22,11 +22,14 @@ public:
 	~TDLearning();
 	void saveData();
 	MoveDirection Move(const int board[4][4]);
+	MoveDirection MovePlay(const int board[4][4]);
 	int generateEvilMove(const int board[4][4]);
+	float getOneEvilMove( int step, const int board[4][4]);
 	void gameover(const int board[4][4]);
 
 	float learningRate;
 	int evilStep;
+	bool trainMode;
 private:
 	struct FeatureTable {
 		FeatureTable() {}
@@ -56,7 +59,6 @@ private:
 
 	string filename;
 	stack<FeatureTable> record;
-	bool trainMode;
 	float *tableAx;
 	float *tableAx2;
 	float *tableBox;
