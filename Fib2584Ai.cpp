@@ -20,8 +20,8 @@ MoveDirection Fib2584Ai::generateMove(int board[4][4])
 
 int Fib2584Ai::generateEvilMove(int board[4][4])
 {
-    return rand() % 16;
-    //return td.generateEvilMove(board);
+    //return rand() % 16;
+    return td.generateEvilMove(board);
 
 }
 

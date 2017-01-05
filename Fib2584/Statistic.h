@@ -24,7 +24,7 @@ private:
 	int iMaxTileOverall_;
 	int iWinGame_;
 	int iMaxScoreOverall_;
-	int iTotalScore_;
+	long long  iTotalScore_;
 	int iGameCount_;
 	int iMoveCount_;
 	clock_t timeDifference_;

@@ -18,16 +18,11 @@ int main(int argc, char* argv[])
 	}
 	int iPlayRounds = atoi(argv[1]);
 	// create and initialize AI
-	//printf("1\n");
 
 	Fib2584Ai ai;
-	//printf("2\n\n\n\n");
 	ai.initialize(argc, argv);
-	//while(1);
-
-	//printf("2\n");
-	int cnt610, cnt1597, cnt2584, cnt4181, cnt6765, cnt10946, cnt17711;
-	cnt610 = cnt1597 = cnt2584 = cnt4181 = cnt6765 = cnt10946 = cnt17711 = 0;
+	int cnt610, cnt1597, cnt2584, cnt4181, cnt6765, cnt10946, cnt17711, cnt28657, cnt46368;
+	cnt610 = cnt1597 = cnt2584 = cnt4181 = cnt6765 = cnt10946 = cnt17711 = cnt28657 = cnt46368 = 0;
 	// initialize statistic data
 	Statistic statistic;
 	statistic.setStartTime();
@@ -47,16 +42,13 @@ int main(int argc, char* argv[])
 			GameBoard originalBoard = gameBoard;
 			iScore += gameBoard.move(moveDirection);
 			if(originalBoard == gameBoard){
-				///printf(" ===  \n");
 				continue;
 			}
 			statistic.increaseOneMove();
 
 			//gameBoard.showBoard();
-			//printf("\n");
 			gameBoard.addRandomTile();
 			//gameBoard.showBoard();
-			//printf("\n");
 		}
 		gameBoard.getArrayBoard(arrayBoard);
 		ai.gameOver(arrayBoard, iScore);
@@ -71,6 +63,8 @@ int main(int argc, char* argv[])
 		if ( maxTileTemp >= 6765 ) cnt6765++;
 		if ( maxTileTemp >= 10946 ) cnt10946++;
 		if ( maxTileTemp >= 17711 ) cnt17711++;
+		if ( maxTileTemp >= 28657 ) cnt28657++;
+		if ( maxTileTemp >= 46368 ) cnt46368++;
 
 		if ( maxScore < iScore ){
 			maxScore = iScore;
@@ -95,18 +89,19 @@ int main(int argc, char* argv[])
 			statistic.reset();
 			statistic.setStartTime();
 			printf("--------------------------------------------------------------\n");
-			printf("win rate 610: %f\n", float(cnt610)/10000.0 );
-			printf("win rate 1597: %f\n", float(cnt1597)/10000.0 );
-			printf("win rate 2584: %f\n", float(cnt2584)/10000.0 );
-			printf("win rate 4181: %f\n", float(cnt4181)/10000.0 );
-			printf("win rate 6765: %f\n", float(cnt6765)/10000.0 );
-			printf("win rate 10946: %f\n", float(cnt10946)/10000.0 );
-			printf("win rate 17711: %f\n", float(cnt17711)/10000.0 );
+			printf("win rate 610: %f\n", float(cnt610)/100.0 );
+			printf("win rate 1597: %f\n", float(cnt1597)/100.0 );
+			printf("win rate 2584: %f\n", float(cnt2584)/100.0 );
+			printf("win rate 6765: %f\n", float(cnt6765)/100.0 );
+			printf("win rate 10946: %f\n", float(cnt10946)/100.0 );
+			printf("win rate 17711: %f\n", float(cnt17711)/100.0 );
+			printf("win rate 28657: %f\n", float(cnt28657)/100.0 );
+			printf("win rate 46368: %f\n", float(cnt46368)/100.0 );
 			printf("--------------------------------------------------------------\n");
-			cnt610 = cnt1597 = cnt2584 = cnt4181 = cnt6765 = cnt10946 = cnt17711 = 0;
+			cnt610 = cnt1597 = cnt2584 = cnt4181 = cnt6765 = cnt10946 = cnt17711 = cnt28657 = cnt46368 = 0;
 			cout << endl;
 		}
-		if( i % 50000 == 0 && i != 0 ){
+		if( i % 70000 == 0 && i != 0 ){
 			ai.td.saveData();
 		}
 	}

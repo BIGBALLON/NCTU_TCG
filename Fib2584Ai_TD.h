@@ -18,14 +18,15 @@
 class TDLearning
 {
 public:
-	TDLearning(bool trainMode = true, const string &filename = string("table"));
+	TDLearning(bool trainMode = false, const string &filename = string("table"));
 	~TDLearning();
-	initialize();
 	void saveData();
 	MoveDirection Move(const int board[4][4]);
+	int generateEvilMove(const int board[4][4]);
 	void gameover(const int board[4][4]);
 
-	float learningRate = 1.00;	
+	float learningRate;
+	int evilStep;
 private:
 	struct FeatureTable {
 		FeatureTable() {}

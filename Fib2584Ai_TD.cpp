@@ -7,88 +7,107 @@ TDLearning::TDLearning(bool trainMode, const std::string &filename)
 :	filename(filename), trainMode(trainMode)
 {
 
-	ifstream fin(filename, ifstream::in | ifstream::binary);
-	ifstream fin2("A", ifstream::in | ifstream::binary);
-	ifstream fin3("E", ifstream::in | ifstream::binary);
+	if ( trainMode ){
+		ifstream fin(filename.c_str(), ifstream::in | ifstream::binary);
+		ifstream fin2("A", ifstream::in | ifstream::binary);
+		ifstream fin3("E", ifstream::in | ifstream::binary);
 
+		learningRate = 1.0;
+		
+		tableAx = new float[featureNum]; 
+		tableAx2 = new float[featureNum]; 
+		tableBox = new float[featureNum]; 
+		tableBox2 = new float[featureNum]; 
+		tableLine = new float[featureNumInner]; 
+
+		tableAxA = new float[featureNum]; 
+		tableAx2A = new float[featureNum]; 
+		tableBoxA = new float[featureNum]; 
+		tableBox2A = new float[featureNum]; 
+		tableLineA = new float[featureNumInner]; 
+
+		tableAxE = new float[featureNum]; 
+		tableAx2E = new float[featureNum]; 
+		tableBoxE = new float[featureNum]; 
+		tableBox2E = new float[featureNum]; 
+		tableLineE = new float[featureNumInner]; 
+		for (int i = 0; i < featureNum; ++i){
+			tableAx[i] = 0.0;
+			tableAx2[i] = 0.0;
+			tableBox[i] = 0.0;
+			tableBox2[i] = 0.0;
+			tableAxA[i] = 0.0;
+			tableAxE[i] = 0.0;
+			tableAx2A[i] = 0.0;
+			tableAx2E[i] = 0.0;
+			tableBoxA[i] = 0.0;
+			tableBoxE[i] = 0.0;
+			tableBox2A[i] = 0.0;
+			tableBox2E[i] = 0.0;
+		}
+		for (int i = 0; i < featureNumInner; ++i){
+			tableLineA[i] = 0.0;
+			tableLineE[i] = 0.0;
+			tableLine[i] = 0.0;
+		}
+
+		if (!fin.fail()) {
+			fin.read((char *)tableAx, featureNum * sizeof(float));
+			fin.read((char *)tableAx2, featureNum * sizeof(float));
+			fin.read((char *)tableBox, featureNum * sizeof(float));
+			fin.read((char *)tableBox2, featureNum * sizeof(float));
+			fin.read((char *)tableLine, featureNumInner * sizeof(float));
+		}
+		
+		fin.close();
+
+		if (!fin2.fail()) {
+			fin2.read((char *)tableAxA, featureNum * sizeof(float));
+			fin2.read((char *)tableAx2A, featureNum * sizeof(float));
+			fin2.read((char *)tableBoxA, featureNum * sizeof(float));
+			fin2.read((char *)tableBox2A, featureNum * sizeof(float));
+			fin2.read((char *)tableLineA, featureNumInner * sizeof(float));
+		}
+
+		fin2.close();
+
+		if (!fin3.fail()) {
+			fin3.read((char *)tableAxE, featureNum * sizeof(float));
+			fin3.read((char *)tableAx2E, featureNum * sizeof(float));
+			fin3.read((char *)tableBoxE, featureNum * sizeof(float));
+			fin3.read((char *)tableBox2E, featureNum * sizeof(float));
+			fin3.read((char *)tableLineE, featureNumInner * sizeof(float));
+		}
+
+		fin3.close();
+	}else{
+
+		evilStep = 0;
+
+		ifstream fin(filename.c_str(), ifstream::in | ifstream::binary);
+		tableAx = new float[featureNum]; 
+		tableAx2 = new float[featureNum]; 
+		tableBox = new float[featureNum]; 
+		tableBox2 = new float[featureNum]; 
+		tableLine = new float[featureNumInner]; 
+
+		if (!fin.fail()) {
+			fin.read((char *)tableAx, featureNum * sizeof(float));
+			fin.read((char *)tableAx2, featureNum * sizeof(float));
+			fin.read((char *)tableBox, featureNum * sizeof(float));
+			fin.read((char *)tableBox2, featureNum * sizeof(float));
+			fin.read((char *)tableLine, featureNumInner * sizeof(float));
+		}
+		
+		fin.close();
+	}
 	
-	tableAx = new float[featureNum]; 
-	tableAx2 = new float[featureNum]; 
-	tableBox = new float[featureNum]; 
-	tableBox2 = new float[featureNum]; 
-	tableLine = new float[featureNumInner]; 
-
-	tableAxA = new float[featureNum]; 
-	tableAx2A = new float[featureNum]; 
-	tableBoxA = new float[featureNum]; 
-	tableBox2A = new float[featureNum]; 
-	tableLineA = new float[featureNumInner]; 
-
-	tableAxE = new float[featureNum]; 
-	tableAx2E = new float[featureNum]; 
-	tableBoxE = new float[featureNum]; 
-	tableBox2E = new float[featureNum]; 
-	tableLineE = new float[featureNumInner]; 
-	for (int i = 0; i < featureNum; ++i){
-		tableAx[i] = 0.0;
-		tableAx2[i] = 0.0;
-		tableBox[i] = 0.0;
-		tableBox2[i] = 0.0;
-		tableAxA[i] = 0.0;
-		tableAxE[i] = 0.0;
-		tableAx2A[i] = 0.0;
-		tableAx2E[i] = 0.0;
-		tableBoxA[i] = 0.0;
-		tableBoxE[i] = 0.0;
-		tableBox2A[i] = 0.0;
-		tableBox2E[i] = 0.0;
-	}
-	for (int i = 0; i < featureNumInner; ++i){
-		tableLineA[i] = 0.0;
-		tableLineE[i] = 0.0;
-		tableLine[i] = 0.0;
-	}
-
-	if (!fin.fail()) {
-		fin.read((char *)tableAx, featureNum * sizeof(float));
-		fin.read((char *)tableAx2, featureNum * sizeof(float));
-		fin.read((char *)tableBox, featureNum * sizeof(float));
-		fin.read((char *)tableBox2, featureNum * sizeof(float));
-		fin.read((char *)tableLine, featureNumInner * sizeof(float));
-	}
-	
-	fin.close();
-
-	if (!fin2.fail()) {
-		fin2.read((char *)tableAxA, featureNum * sizeof(float));
-		fin2.read((char *)tableAx2A, featureNum * sizeof(float));
-		fin2.read((char *)tableBoxA, featureNum * sizeof(float));
-		fin2.read((char *)tableBox2A, featureNum * sizeof(float));
-		fin2.read((char *)tableLineA, featureNumInner * sizeof(float));
-	}
-
-	fin2.close();
-
-	if (!fin3.fail()) {
-		fin3.read((char *)tableAxE, featureNum * sizeof(float));
-		fin3.read((char *)tableAx2E, featureNum * sizeof(float));
-		fin3.read((char *)tableBoxE, featureNum * sizeof(float));
-		fin3.read((char *)tableBox2E, featureNum * sizeof(float));
-		fin3.read((char *)tableLineE, featureNumInner * sizeof(float));
-	}
-
-	fin3.close();
-}
-TDLearning::initialize()
-{
-
-
 }
 
 TDLearning::~TDLearning()
 {
 	if (trainMode) {
-		ofstream fout(filename, ifstream::out | ifstream::binary | ifstream::trunc);
+		ofstream fout(filename.c_str(), ifstream::out | ifstream::binary | ifstream::trunc);
 
 		fout.write((char *)tableAx, featureNum * sizeof(float));
 		fout.write((char *)tableAx2, featureNum * sizeof(float));
@@ -114,31 +133,40 @@ TDLearning::~TDLearning()
 		fout3.write((char *)tableBox2E, featureNum * sizeof(float));
 		fout3.write((char *)tableLineE, featureNumInner * sizeof(float));
 		fout3.close();
+
+
+		delete [] tableAx;
+		delete [] tableAx2;
+		delete [] tableBox;
+		delete [] tableBox2;
+		delete [] tableLine;
+		delete [] tableAxA;
+		delete [] tableAx2A;
+		delete [] tableBoxA;
+		delete [] tableBox2A;
+		delete [] tableLineA;
+		delete [] tableAxE;
+		delete [] tableAx2E;
+		delete [] tableBoxE;
+		delete [] tableBox2E;
+		delete [] tableLineE;
+	}else{
+		delete [] tableAx;
+		delete [] tableAx2;
+		delete [] tableBox;
+		delete [] tableBox2;
+		delete [] tableLine;
+
 	}
 
 //important
-	delete [] tableAx;
-	delete [] tableAx2;
-	delete [] tableBox;
-	delete [] tableBox2;
-	delete [] tableLine;
-	delete [] tableAxA;
-	delete [] tableAx2A;
-	delete [] tableBoxA;
-	delete [] tableBox2A;
-	delete [] tableLineA;
-	delete [] tableAxE;
-	delete [] tableAx2E;
-	delete [] tableBoxE;
-	delete [] tableBox2E;
-	delete [] tableLineE;
 }
 
 void TDLearning::saveData()
 {
 	cout << "--------------------------------------------------------" << endl;
 	if (trainMode) {
-		ofstream fout(filename, ifstream::out | ifstream::binary | ifstream::trunc);
+		ofstream fout(filename.c_str(), ifstream::out | ifstream::binary | ifstream::trunc);
 
 		fout.write((char *)tableAx, featureNum * sizeof(float));
 		fout.write((char *)tableAx2, featureNum * sizeof(float));
@@ -200,6 +228,50 @@ MoveDirection TDLearning::Move(const int board[4][4])
 	return bestDir;
 }
 
+int TDLearning::generateEvilMove(const int board[4][4])
+{
+	
+	++evilStep;
+	int genTile = 1;
+	if (evilStep == 4){
+		evilStep %= 4;
+		genTile = 3;
+	}
+
+	float evilScote = 999999999;
+	int boardTemp[4][4];
+	MoveDirection bestDir;
+	int bestI = 0;
+	for (int i = 0; i < 16; ++i){
+		if ( board[i/4][i%4] != 0 ) continue;
+		memcpy(boardTemp,board,sizeof(boardTemp));
+		boardTemp[i/4][i%4] = genTile;
+
+		float bestValuePlusReward = -999999999;
+
+		GameBoardAI initBoard(boardTemp);
+
+		for (int dir = 0; dir < 4; dir++) {
+			GameBoardAI newBoard(initBoard);
+			int reward = newBoard.move((MoveDirection)dir);
+			if (newBoard == initBoard)
+				continue;
+			FeatureTable newFeature(newBoard, reward);
+			float valuePlusReward = getTableValue(newFeature) + reward;
+			if (valuePlusReward > bestValuePlusReward) {
+				bestDir = (MoveDirection)dir;
+				bestValuePlusReward = valuePlusReward;
+			}
+		}
+
+		if ( evilScote > bestValuePlusReward ){
+			evilScote = bestValuePlusReward;
+			bestI = i;
+		}
+	}
+	return bestI;
+}
+
 void TDLearning::gameover(const int board[4][4])
 {
 	if (trainMode) {
@@ -223,10 +295,6 @@ void TDLearning::gameover(const int board[4][4])
 				//printf("beta2 = %f\n", beta);
 				//system( "pause" );
 			}
-			/*printf("delta = %f\n", delta);
-			printf("tableAxE[feature.ax[i]]=%f\ntableAxA[feature.ax[i]] = %f\n", tableAxE[feature.ax[i]],tableAxA[feature.ax[i]]);
-
-			printf("beta = %f\n", beta);*/
 			tableAx[feature.ax[i]] += value * beta;
 
 			tableAx2E[feature.ax2[i]] += delta;
