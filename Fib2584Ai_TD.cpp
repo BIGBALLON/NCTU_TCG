@@ -233,6 +233,8 @@ MoveDirection TDLearning::Move(const int board[4][4])
 	return bestDir;
 }
 
+
+
 MoveDirection TDLearning::MovePlay(const int board[4][4])
 {
 	GameBoardAI initBoard(board);
@@ -271,16 +273,17 @@ float TDLearning::getOneEvilMove( int step ,const int board[4][4]){
 	int boardTemp[4][4];
 	MoveDirection bestDir;
 	int bestI = 0;
-	int flag = 0;
 	for (int i = 0; i < 16; ++i){
+
+		
 		if ( board[i/4][i%4] != 0 ) continue;
 		memcpy(boardTemp,board,sizeof(boardTemp));
 		boardTemp[i/4][i%4] = genTile;
 
-		float bestValuePlusReward = -999999999;
+		float bestValuePlusReward = NEGATIVE_INF;
 
 		GameBoardAI initBoard(boardTemp);
-
+		int flag = 0;
 		for (int dir = 0; dir < 4; dir++) {
 			GameBoardAI newBoard(initBoard);
 			int reward = newBoard.move((MoveDirection)dir);
@@ -294,15 +297,18 @@ float TDLearning::getOneEvilMove( int step ,const int board[4][4]){
 				bestValuePlusReward = valuePlusReward;
 			}
 		}
-
+		if( flag == 0 ) return 0;	
 		if ( evilScote > bestValuePlusReward ){
 			evilScote = bestValuePlusReward;
 			bestI = i;
 		}
 	}
-	if( flag == 0 ) return 0;
+	
 	return evilScote;
 }
+
+
+
 int TDLearning::generateEvilMove(const int board[4][4])
 {
 	
@@ -317,22 +323,28 @@ int TDLearning::generateEvilMove(const int board[4][4])
 	int boardTemp[4][4];
 	MoveDirection bestDir;
 	int bestI = 0;
+
 	for (int i = 0; i < 16; ++i){
 		if ( board[i/4][i%4] != 0 ) continue;
 		memcpy(boardTemp,board,sizeof(boardTemp));
 		boardTemp[i/4][i%4] = genTile;
 
-		float bestValuePlusReward = -999999999;
-
-		GameBoardAI initBoard(boardTemp);
+		int flag = 0;
+		float bestValuePlusReward = NEGATIVE_INF;
 
 		for (int dir = 0; dir < 4; dir++) {
-			GameBoardAI newBoard(initBoard);
+			GameBoardAI newBoard(boardTemp);
 			int reward = newBoard.move((MoveDirection)dir);
-			if (newBoard == initBoard)
+			if (newBoard == boardTemp)
 				continue;
+			flag = 1;
 			FeatureTable newFeature(newBoard, reward);
 			float valuePlusReward = getTableValue(newFeature) + reward;
+			int temp[4][4];
+			newBoard.getArrayBoard(temp);
+			
+			valuePlusReward += getOneEvilMove(evilStep+1,temp);
+
 			if (valuePlusReward > bestValuePlusReward) {
 				bestDir = (MoveDirection)dir;
 				bestValuePlusReward = valuePlusReward;
@@ -343,12 +355,18 @@ int TDLearning::generateEvilMove(const int board[4][4])
 			evilScote = bestValuePlusReward;
 			bestI = i;
 		}
+		if ( flag == 0 ) return i;
 	}
 	return bestI;
 }
 
 void TDLearning::gameover(const int board[4][4])
 {
+	printf("e1 = %d\n", evilStep);
+	evilStep = 0;
+	printf("e2 = %d\n", evilStep);
+
+
 	if (trainMode) {
 		FeatureTable nextFeature;
 
