@@ -24,7 +24,6 @@ public:
 	MoveDirection Move(const int board[4][4]);
 	MoveDirection MovePlay(const int board[4][4]);
 	int generateEvilMove(const int board[4][4]);
-	float getOneEvilMove( int step, const int board[4][4]);
 	void gameover(const int board[4][4]);
 
 	float learningRate;
